@@ -1,0 +1,9 @@
+{
+  "name": "花学社",
+  "short_name": "花学社",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f6fa",
+  "theme_color": "#2D7FF9",
+  "description": "花学社 · 学习交流社区"
+}
