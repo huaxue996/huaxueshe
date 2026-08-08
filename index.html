@@ -31,22 +31,24 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
 #boards::-webkit-scrollbar{display:none}
 .board-tab{flex-shrink:0;padding:6px 11px;border-radius:16px;background:#fff;font-size:12px;color:#555;border:1px solid #eee;cursor:pointer}
 .board-tab.on{background:#7B68EE;color:#fff;border-color:#7B68EE}
-.ad-box{position:relative;border-radius:12px;overflow:hidden;margin:6px 0 10px;background:#fff}
+.ad-box{position:relative;border-radius:12px;overflow:hidden;margin:6px 0 8px;background:#fff}
 .ad-track{display:flex;transition:transform .4s}
-.ad-item{min-width:100%;padding:12px 14px;background:linear-gradient(135deg,#7B68EE,#6A5ACD);color:#fff;cursor:pointer}
+.ad-item{min-width:100%;padding:10px 14px;background:linear-gradient(135deg,#7B68EE,#6A5ACD);color:#fff;cursor:pointer}
 .ad-dots{position:absolute;bottom:4px;right:8px;display:flex;gap:3px}
 .ad-dots span{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5)}
 .ad-dots span.on{background:#fff}
-.daily-card{background:#fff;border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-.dc-title{font-size:13px;font-weight:700;color:#7B68EE;margin-bottom:8px;display:flex;align-items:center;gap:4px}
-.dc-item{padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:13px;line-height:1.5;color:#333;cursor:pointer}
+#spotlight{max-height:45vh;overflow-y:auto;margin-bottom:8px;-webkit-overflow-scrolling:touch}
+#spotlight::-webkit-scrollbar{display:none}
+.daily-card{background:#fff;border-radius:16px;padding:12px;margin-bottom:8px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.dc-title{font-size:13px;font-weight:700;color:#7B68EE;margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.dc-item{padding:4px 0;border-bottom:1px solid #f5f5f5;font-size:12px;line-height:1.5;color:#333;cursor:pointer}
 .dc-item:last-child{border:none}
 .dc-item b{color:#7B68EE}
 .dc-tag{display:inline-block;font-size:10px;color:#7B68EE;background:#F0E6FF;border-radius:8px;padding:2px 8px;margin:3px 6px 3px 0;cursor:pointer}
-.dc-quote{text-align:center;font-size:13px;color:#555;font-style:italic;padding:6px 0}
-.dc-grad{background:linear-gradient(135deg,#7B68EE,#F5A623);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:18px;font-weight:800;text-align:center;padding:8px 0 2px}
-.sort-bar{display:flex;gap:6px;margin-bottom:10px}
-.sort-bar span{padding:4px 10px;border-radius:12px;font-size:12px;background:#fff;color:#888;cursor:pointer}
+.dc-quote{text-align:center;font-size:12px;color:#555;font-style:italic;padding:4px 0}
+.dc-grad{background:linear-gradient(135deg,#7B68EE,#F5A623);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;font-weight:800;text-align:center;padding:6px 0 2px}
+.sort-bar{display:flex;gap:6px;margin-bottom:8px;overflow-x:auto}
+.sort-bar span{padding:4px 10px;border-radius:12px;font-size:12px;background:#fff;color:#888;cursor:pointer;flex-shrink:0}
 .sort-bar span.on{background:#7B68EE;color:#fff}
 .post-card{background:#fff;border-radius:12px;padding:11px;margin-bottom:10px;box-shadow:0 4px 12px rgba(0,0,0,.05);cursor:pointer}
 .pc-title{font-size:15px;font-weight:600;margin-bottom:4px}
@@ -89,7 +91,9 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
 .small-tab div.on{color:#7B68EE;font-weight:700;border-bottom:2px solid #7B68EE}
 .stat-card{background:#fff;border-radius:12px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-around;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.05)}
 .stat-num{font-size:20px;font-weight:700}.stat-label{font-size:10px;color:#999;margin-top:1px}
-.grid-8{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:12px;padding:8px 4px;margin-bottom:8px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.grid-wrap{overflow-x:auto;border-radius:12px;margin-bottom:8px;-webkit-overflow-scrolling:touch}
+.grid-wrap::-webkit-scrollbar{display:none}
+.grid-8{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:12px;padding:8px 4px;box-shadow:0 4px 12px rgba(0,0,0,.05);min-width:200%}
 .grid-item{text-align:center;padding:8px 2px;cursor:pointer}.grid-item .gi{font-size:20px}.grid-item .gt{font-size:10px;color:#666;margin-top:3px}
 .notice-bar{background:linear-gradient(135deg,#fff7e6,#fff);border:1px solid #ffe0a3;border-radius:10px;padding:8px 11px;margin-bottom:8px;font-size:11px;color:#8a6d1a;cursor:pointer}
 .profile-top{background:#fff;border-radius:12px;padding:14px;text-align:center;margin-bottom:8px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
@@ -164,16 +168,15 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
   </div>
 </div>
 
-<!-- 新用户弹窗 -->
 <div class="modal-mask" id="welcomeModal"><div class="modal"><h3>欢迎加入花学社 🎉</h3><div class="modal-body" id="welcomeBody"></div><button class="btn" style="margin-top:14px" onclick="closeWelcome()">我已阅读，开始学习</button></div></div>
 
 <!-- 首页 -->
 <div id="mainPage" class="page">
   <div class="topbar">
-    <div class="top-avatar" id="topAvatar" onclick="goPage('mePage')">👤</div>
+    <div class="top-avatar" id="topAvatar" onclick="goMe()">👤</div>
     <div class="search-bar"><input id="searchInput" placeholder="搜索…" onkeydown="if(event.key==='Enter')doSearch()"></div>
-    <div class="top-btn" onclick="needLogin()">➕</div>
-    <div class="top-btn" onclick="goPage('infoPage')">🔔<span class="badge" id="topBadge" style="display:none">0</span></div>
+    <div class="top-btn" onclick="goPost()">➕</div>
+    <div class="top-btn" onclick="goInfo()">🔔<span class="badge" id="topBadge" style="display:none">0</span></div>
   </div>
   <div id="boards"></div>
   <div class="ad-box" id="adBox"><div class="ad-track" id="adTrack"></div><div class="ad-dots" id="adDots"></div></div>
@@ -189,18 +192,17 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
   <header><span class="back" onclick="goPage('mainPage')">←</span><h2>发布帖子</h2><span style="width:20px"></span></header>
   <div class="form-label" style="font-size:13px;font-weight:600;margin:8px 0 4px">选择板块</div>
   <div class="chip-wrap" id="boardChips"></div>
-  <div class="form-label" style="font-size:13px;font-weight:600;margin:8px 0 4px">标题</div>
+  <div style="font-size:13px;font-weight:600;margin:8px 0 4px">标题</div>
   <input id="pTitle" class="inp" type="text" maxlength="40" placeholder="一句话说清主题">
-  <div class="form-label" style="font-size:13px;font-weight:600;margin:8px 0 4px">内容</div>
+  <div style="font-size:13px;font-weight:600;margin:8px 0 4px">内容</div>
   <textarea id="pContent" class="inp" placeholder="分享…（禁链接/二维码/违禁词）" onfocus="showAt('post')"></textarea>
-  <div class="form-label" style="font-size:13px;font-weight:600;margin:8px 0 4px">图片（可选）</div>
+  <div style="font-size:13px;font-weight:600;margin:8px 0 4px">图片（可选）</div>
   <label class="upload-btn">📷 添加图片<input type="file" id="pImg" accept="image/*" style="display:none" onchange="pickImg(this,'imgPreview')"></label>
   <div id="imgPreview"></div>
   <div class="err" id="postErr"></div>
   <button class="btn" style="margin-top:10px" onclick="submitPost()">发布</button>
 </div>
 
-<!-- 详情 -->
 <div id="detailPage" class="page">
   <header><span class="back" onclick="exitDetail()">←</span><h2>帖子详情</h2><span style="width:20px"></span></header>
   <div id="detailBox"></div>
@@ -208,7 +210,6 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
   <div style="height:55px"></div>
 </div>
 
-<!-- 用户主页 -->
 <div id="userPage" class="page">
   <header><span class="back" onclick="history.back()">←</span><h2>个人主页</h2><span style="width:20px"></span></header>
   <div id="userBox"></div>
@@ -220,7 +221,7 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
 <div id="mePage" class="page">
   <header><span class="back" onclick="goPage('mainPage')">←</span><h2>个人中心</h2><span style="width:20px"></span></header>
   <div id="meProfile"></div>
-  <div class="grid-8" id="meGrid"></div>
+  <div class="grid-wrap"><div class="grid-8" id="meGrid"></div></div>
   <div class="notice-bar" onclick="goPage('rulesPage')">📢 版规及规则</div>
   <div style="font-size:12px;font-weight:600;margin-bottom:6px">🕘 浏览历史</div>
   <div id="historyList"><div class="empty" style="padding:6px 0">暂无记录</div></div>
@@ -228,6 +229,7 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
 
 <div id="editPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>编辑资料</h2></header><div style="font-size:12px;margin-bottom:4px">头像</div><label class="upload-btn">🖼️ 更换头像<input type="file" id="eAvatar" accept="image/*" style="display:none" onchange="pickImg(this,'avPreview')"></label><div id="avPreview"></div><div style="font-size:12px;margin:10px 0 4px">简介</div><textarea id="eBio" class="inp" style="height:70px" placeholder="介绍一下自己…"></textarea><div style="font-size:12px;margin:10px 0 4px">背景美化（仅自己可见）</div><div class="chip-wrap" id="bgChips"></div><div class="err" id="editErr"></div><button class="btn" style="margin-top:10px" onclick="saveProfile()">保存</button></div>
 <div id="invitePage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>邀请好友</h2></header><div id="inviteBox"></div></div>
+<div id="groupPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>交流群</h2></header><div id="groupBox"></div></div>
 <div id="favPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>我的收藏</h2></header><div class="search-bar" style="margin-bottom:8px"><input id="favSearch" placeholder="搜索收藏…" onkeydown="if(event.key==='Enter')loadFavs(curFavType)"></div><div class="small-tab"><div id="favTab1" class="on" onclick="loadFavs('app')">📱应用</div><div id="favTab2" onclick="loadFavs('course')">📺课程</div><div id="favTab3" onclick="loadFavs('post')">📝帖子</div><div id="favTab4" onclick="loadFavs('comment')">💬评论</div></div><div id="favList"></div></div>
 <div id="infoPage" class="page"><header><span class="back" onclick="goPage('mainPage')">←</span><h2>我的信息</h2></header><div id="infoList"></div></div>
 <div id="signPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>每日签到</h2></header><div id="signBox"></div></div>
@@ -237,9 +239,8 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
 <div id="resourcePage" class="page"><header><span class="back" onclick="goPage('mainPage')">←</span><h2>学习资源</h2></header><div class="small-tab"><div id="resTab1" class="on" onclick="loadResources('video')">🎬教程视频</div><div id="resTab2" onclick="loadResources('app')">📱应用</div></div><button class="btn" id="resPostBtn" style="display:none;margin-bottom:8px" onclick="goPage('resPostPage')">➕上传资源</button><div id="resList"></div></div>
 <div id="resPostPage" class="page"><header><span class="back" onclick="goPage('resourcePage')">←</span><h2>上传资源</h2></header><div style="font-size:12px;margin-bottom:4px">类型</div><div class="chip-wrap" id="resTypeChips"></div><label class="upload-btn" style="margin-top:6px">🖼️ 图标/封面<input type="file" id="resImg" accept="image/*" style="display:none" onchange="pickImg(this,'resImgPreview')"></label><div id="resImgPreview"></div><div style="font-size:12px;margin:6px 0 4px">标题</div><input id="resTitle" class="inp" type="text" maxlength="40" placeholder="资源标题"><div style="font-size:12px;margin:6px 0 4px">介绍</div><textarea id="resDesc" class="inp" style="height:60px" placeholder="简单介绍（可选）"></textarea><div style="font-size:12px;margin:6px 0 4px">链接/下载地址</div><input id="resLink" class="inp" type="text" placeholder="跳转链接"><div style="font-size:12px;margin:6px 0 4px">内存大小（如 45MB）</div><input id="resSize" class="inp" type="text" placeholder="应用内存大小"><div class="err" id="resErr"></div><button class="btn" style="margin-top:10px" onclick="submitResource()">发布资源</button></div>
 <div id="appDetailPage" class="page"><header><span class="back" onclick="goPage('resourcePage')">←</span><h2>应用详情</h2></header><div id="appDetailBox"></div></div>
-<div id="adminPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>管理员后台</h2></header><div class="small-tab"><div id="aTab1" class="on" onclick="loadAdmin('reports')">📮举报处理</div><div id="aTab2" onclick="loadAdmin('punish')">⚖️处罚操作</div></div><div id="adminBox"></div></div>
+<div id="adminPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>管理员后台</h2></header><div class="small-tab"><div id="aTab1" class="on" onclick="loadAdmin('reports')">📮举报处理</div><div id="aTab2" onclick="loadAdmin('punish')">⚖️处罚操作</div><div id="aTab3" onclick="loadAdmin('posts')">🗑帖子管理</div></div><div id="adminBox"></div></div>
 
-<!-- 番茄钟 -->
 <div id="pomoPage" class="page">
   <header><span class="back" onclick="goPage('mePage')">←</span><h2>番茄时钟</h2></header>
   <div style="text-align:center;padding:20px 0">
@@ -273,7 +274,6 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
   <button onclick="submitComment()" style="width:52px;height:36px;border:none;border-radius:18px;background:#7B68EE;color:#fff;font-size:12px;flex-shrink:0">发送</button>
 </div>
 <div class="at-sel" id="atSel"></div>
-
 <div class="modal-mask" id="tipModal" onclick="if(event.target===this)hideTip()"><div class="modal"><h3>感谢支持🎁</h3><div style="text-align:center;margin:6px 0">❤️ 送好评</div><button class="btn" style="margin:8px 0" onclick="doTip('good',0)">❤️ 送好评</button><div style="text-align:center;margin:6px 0">或打赏硬币</div><div class="chip-wrap" style="justify-content:center;margin:6px 0" id="tipCoins"></div><button class="btn btn-plain" onclick="hideTip()">取消</button></div></div>
 <div class="modal-mask" id="reportModal" onclick="if(event.target===this)hideReport()"><div class="modal"><h3>举报</h3><div id="reportReasons"></div><button class="btn btn-plain" onclick="hideReport()">取消</button></div></div>
 <div id="afkOverlay"><div class="afkBox"><h3>⏰ 挂机检测</h3><div style="font-size:13px;color:#666;margin:8px 0">请输入验证码</div><canvas id="afkCaptcha" width="120" height="40" style="border-radius:6px;cursor:pointer" onclick="drawAfkCaptcha()"></canvas><input id="afkInput" class="inp" placeholder="输入验证码"><button class="btn" onclick="checkAfk()">确认</button></div></div>
