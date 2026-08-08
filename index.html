@@ -8,12 +8,12 @@
 <title>花学社</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#F0E6FF;color:#333;padding-bottom:60px;padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#F0E6FF;color:#333;padding-bottom:calc(60px + env(safe-area-inset-bottom))}
 .page{display:none;padding:12px;max-width:520px;margin:0 auto;padding-bottom:20px}
 .page.active{display:block}
 .inp{width:100%;height:42px;border:1px solid #ddd;border-radius:10px;padding:0 12px;font-size:14px;background:#fff;margin-bottom:8px;outline:none}
 .inp:focus{border-color:#7B68EE}
-textarea.inp{height:110px;padding:10px;resize:none;line-height:1.6}
+textarea.inp{height:100px;padding:10px;resize:none;line-height:1.6}
 .btn{width:100%;height:42px;border:none;border-radius:10px;font-size:15px;font-weight:bold;color:#fff;background:linear-gradient(135deg,#7B68EE,#6A5ACD);cursor:pointer;margin-top:4px;display:flex;align-items:center;justify-content:center;line-height:1;padding:0}
 .btn-plain{background:#eee;color:#555}
 .tip{font-size:12px;color:#999;margin-top:6px;line-height:1.5}
@@ -47,6 +47,8 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
 .dc-tag{display:inline-block;font-size:10px;color:#7B68EE;background:#F0E6FF;border-radius:8px;padding:2px 8px;margin:3px 6px 3px 0;cursor:pointer}
 .dc-quote{text-align:center;font-size:12px;color:#555;font-style:italic;padding:4px 0}
 .dc-grad{background:linear-gradient(135deg,#7B68EE,#F5A623);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;font-weight:800;text-align:center;padding:6px 0 2px}
+.dc-en{font-size:14px;font-weight:700;color:#333;line-height:1.6}
+.dc-cn{font-size:12px;color:#888;margin-top:3px}
 .sort-bar{display:flex;gap:6px;margin-bottom:8px;overflow-x:auto}
 .sort-bar span{padding:4px 10px;border-radius:12px;font-size:12px;background:#fff;color:#888;cursor:pointer;flex-shrink:0}
 .sort-bar span.on{background:#7B68EE;color:#fff}
@@ -93,14 +95,30 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
 .stat-num{font-size:20px;font-weight:700}.stat-label{font-size:10px;color:#999;margin-top:1px}
 .grid-wrap{overflow-x:auto;border-radius:12px;margin-bottom:8px;-webkit-overflow-scrolling:touch}
 .grid-wrap::-webkit-scrollbar{display:none}
-.grid-8{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:12px;padding:8px 4px;box-shadow:0 4px 12px rgba(0,0,0,.05);min-width:200%}
+.grid-8{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(2,auto);background:#fff;border-radius:12px;padding:8px 4px;box-shadow:0 4px 12px rgba(0,0,0,.05);min-width:230%}
 .grid-item{text-align:center;padding:8px 2px;cursor:pointer}.grid-item .gi{font-size:20px}.grid-item .gt{font-size:10px;color:#666;margin-top:3px}
 .notice-bar{background:linear-gradient(135deg,#fff7e6,#fff);border:1px solid #ffe0a3;border-radius:10px;padding:8px 11px;margin-bottom:8px;font-size:11px;color:#8a6d1a;cursor:pointer}
+/* 我的卡片（可点击跳主页） */
+.me-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.me-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#7B68EE,#6A5ACD);color:#fff;line-height:56px;font-size:24px;text-align:center;flex-shrink:0;overflow:hidden}
+.me-avatar img{width:100%;height:100%;object-fit:cover}
+.me-info{flex:1}
+.me-name{font-size:16px;font-weight:700}
+.me-exp{background:#eee;border-radius:5px;height:5px;margin-top:6px;overflow:hidden}
+.me-exp i{display:block;height:100%;background:linear-gradient(90deg,#7B68EE,#6A5ACD)}
+.me-exp-t{font-size:10px;color:#999;margin-top:3px}
+.me-arrow{font-size:20px;color:#ccc}
+/* 主页背景图 */
+.ubg{position:relative;width:100%;height:190px;border-radius:14px;overflow:hidden;margin-bottom:8px;background:linear-gradient(135deg,#7B68EE,#6A5ACD)}
+.ubg img{width:100%;height:100%;object-fit:cover}
+.ubg-avatar{position:absolute;left:50%;bottom:-34px;transform:translateX(-50%);width:72px;height:72px;border-radius:50%;border:3px solid #fff;background:#eee;color:#333;line-height:66px;font-size:30px;text-align:center;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.ubg-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.uinfo{background:#fff;border-radius:12px;padding:38px 12px 12px;text-align:center;margin-bottom:8px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.uname{font-size:18px;font-weight:700}
+.utag{font-size:10px;background:#e5484d;color:#fff;border-radius:3px;padding:1px 5px;margin-left:5px;vertical-align:middle}
+.uq{font-size:12px;color:#999;margin-top:3px}
+.uedit{display:inline-block;margin-top:8px;padding:5px 20px;border-radius:14px;font-size:12px;background:#F0E6FF;color:#7B68EE;cursor:pointer}
 .profile-top{background:#fff;border-radius:12px;padding:14px;text-align:center;margin-bottom:8px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-.pt-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#7B68EE,#6A5ACD);color:#fff;line-height:64px;font-size:26px;margin:0 auto 6px;cursor:pointer;overflow:hidden}
-.pt-avatar img{width:100%;height:100%;object-fit:cover}
-.pt-name{font-size:17px;font-weight:700}
-.pt-tag{font-size:10px;background:#e5484d;color:#fff;border-radius:3px;padding:1px 5px;margin-left:5px;vertical-align:middle}
 .pt-exp{background:#eee;border-radius:6px;height:6px;margin:8px 20px 0;overflow:hidden}
 .pt-exp i{display:block;height:100%;background:linear-gradient(90deg,#7B68EE,#6A5ACD)}
 .pt-exp-t{font-size:10px;color:#999;margin-top:3px}
@@ -190,7 +208,7 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
 <!-- 发帖 -->
 <div id="postPage" class="page">
   <header><span class="back" onclick="goPage('mainPage')">←</span><h2>发布帖子</h2><span style="width:20px"></span></header>
-  <div class="form-label" style="font-size:13px;font-weight:600;margin:8px 0 4px">选择板块</div>
+  <div style="font-size:13px;font-weight:600;margin:8px 0 4px">选择板块</div>
   <div class="chip-wrap" id="boardChips"></div>
   <div style="font-size:13px;font-weight:600;margin:8px 0 4px">标题</div>
   <input id="pTitle" class="inp" type="text" maxlength="40" placeholder="一句话说清主题">
@@ -210,6 +228,7 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
   <div style="height:55px"></div>
 </div>
 
+<!-- 用户主页（背景图设计） -->
 <div id="userPage" class="page">
   <header><span class="back" onclick="history.back()">←</span><h2>个人主页</h2><span style="width:20px"></span></header>
   <div id="userBox"></div>
@@ -227,7 +246,7 @@ header h2{font-size:18px;flex-shrink:0;line-height:1}
   <div id="historyList"><div class="empty" style="padding:6px 0">暂无记录</div></div>
 </div>
 
-<div id="editPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>编辑资料</h2></header><div style="font-size:12px;margin-bottom:4px">头像</div><label class="upload-btn">🖼️ 更换头像<input type="file" id="eAvatar" accept="image/*" style="display:none" onchange="pickImg(this,'avPreview')"></label><div id="avPreview"></div><div style="font-size:12px;margin:10px 0 4px">简介</div><textarea id="eBio" class="inp" style="height:70px" placeholder="介绍一下自己…"></textarea><div style="font-size:12px;margin:10px 0 4px">背景美化（仅自己可见）</div><div class="chip-wrap" id="bgChips"></div><div class="err" id="editErr"></div><button class="btn" style="margin-top:10px" onclick="saveProfile()">保存</button></div>
+<div id="editPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>编辑资料</h2></header><div style="font-size:12px;margin-bottom:4px">主页背景图</div><label class="upload-btn">🖼️ 更换背景图<input type="file" id="eBg" accept="image/*" style="display:none" onchange="pickImg(this,'bgPreview')"></label><div id="bgPreview"></div><div style="font-size:12px;margin:10px 0 4px">头像</div><label class="upload-btn">🖼️ 更换头像<input type="file" id="eAvatar" accept="image/*" style="display:none" onchange="pickImg(this,'avPreview')"></label><div id="avPreview"></div><div style="font-size:12px;margin:10px 0 4px">简介</div><textarea id="eBio" class="inp" style="height:60px" placeholder="介绍一下自己…"></textarea><div style="font-size:12px;margin:10px 0 4px">背景美化（仅自己可见）</div><div class="chip-wrap" id="bgChips"></div><div class="err" id="editErr"></div><button class="btn" style="margin-top:10px" onclick="saveProfile()">保存</button></div>
 <div id="invitePage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>邀请好友</h2></header><div id="inviteBox"></div></div>
 <div id="groupPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>交流群</h2></header><div id="groupBox"></div></div>
 <div id="favPage" class="page"><header><span class="back" onclick="goPage('mePage')">←</span><h2>我的收藏</h2></header><div class="search-bar" style="margin-bottom:8px"><input id="favSearch" placeholder="搜索收藏…" onkeydown="if(event.key==='Enter')loadFavs(curFavType)"></div><div class="small-tab"><div id="favTab1" class="on" onclick="loadFavs('app')">📱应用</div><div id="favTab2" onclick="loadFavs('course')">📺课程</div><div id="favTab3" onclick="loadFavs('post')">📝帖子</div><div id="favTab4" onclick="loadFavs('comment')">💬评论</div></div><div id="favList"></div></div>
