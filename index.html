@@ -8,133 +8,190 @@
 <title>花学社</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f4f6fa;color:#222;padding-bottom:60px}
-.page{display:none;padding:16px;max-width:520px;margin:0 auto;padding-bottom:20px}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f4f6fa;color:#222;padding-bottom:56px}
+.page{display:none;padding:14px;max-width:520px;margin:0 auto;padding-bottom:20px}
 .page.active{display:block}
-#loginPage{padding-top:18vh;text-align:center}
-.logo{width:80px;height:80px;border-radius:22px;background:linear-gradient(135deg,#2D7FF9,#7C6FF0);color:#fff;font-size:40px;line-height:80px;margin:0 auto 16px;font-weight:bold}
-#loginPage h1{font-size:24px;margin-bottom:6px}
-#loginPage .sub{color:#888;font-size:13px;margin-bottom:28px}
-.inp{width:100%;height:46px;border:1px solid #ddd;border-radius:12px;padding:0 14px;font-size:15px;background:#fff;margin-bottom:12px;outline:none}
+.inp{width:100%;height:44px;border:1px solid #ddd;border-radius:12px;padding:0 14px;font-size:15px;background:#fff;margin-bottom:10px;outline:none}
 .inp:focus{border-color:#2D7FF9}
-textarea.inp{height:140px;padding:12px;resize:none;line-height:1.6}
-.btn{width:100%;height:46px;border:none;border-radius:12px;font-size:16px;font-weight:bold;color:#fff;background:linear-gradient(135deg,#2D7FF9,#7C6FF0);margin-top:6px;cursor:pointer}
+textarea.inp{height:120px;padding:10px;resize:none;line-height:1.6}
+.btn{width:100%;height:44px;border:none;border-radius:12px;font-size:15px;font-weight:bold;color:#fff;background:linear-gradient(135deg,#2D7FF9,#7C6FF0);margin-top:6px;cursor:pointer}
 .btn:disabled{opacity:.6}
 .btn-plain{background:#eee;color:#555}
-.tip{font-size:12px;color:#999;margin-top:12px;line-height:1.6}
-.err{color:#e5484d;font-size:13px;margin-top:8px;min-height:18px}
-header{display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px}
-header h2{font-size:20px}
-.back{font-size:24px;cursor:pointer;color:#555}
-#boards{display:flex;overflow-x:auto;gap:8px;padding-bottom:10px}
+.tip{font-size:12px;color:#999;margin-top:8px;line-height:1.6}
+.err{color:#e5484d;font-size:13px;margin-top:6px;min-height:16px}
+header{display:flex;align-items:center;gap:8px;padding:10px 0 8px}
+header h2{font-size:18px;flex-shrink:0}
+.back{font-size:22px;cursor:pointer;color:#555;flex-shrink:0}
+.topbar{display:flex;align-items:center;gap:10px;padding:10px 0 8px}
+.top-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#2D7FF9,#7C6FF0);color:#fff;line-height:36px;text-align:center;font-size:17px;flex-shrink:0;cursor:pointer}
+.search-bar{flex:1;display:flex;align-items:center;background:#fff;border-radius:18px;padding:0 12px;height:36px;border:1px solid #eee}
+.search-bar input{flex:1;border:none;outline:none;font-size:14px;background:transparent}
+.top-btn{width:34px;height:34px;border-radius:50%;background:#fff;line-height:34px;text-align:center;font-size:17px;cursor:pointer;flex-shrink:0;position:relative}
+.top-btn .badge{position:absolute;top:-3px;right:-3px;background:#e5484d;color:#fff;font-size:10px;border-radius:9px;padding:1px 5px;min-width:16px}
+#boards{display:flex;overflow-x:auto;gap:8px;padding:8px 0}
 #boards::-webkit-scrollbar{display:none}
-.board-tab{flex-shrink:0;padding:8px 14px;border-radius:20px;background:#fff;font-size:13px;color:#555;border:1px solid #eee;cursor:pointer}
+.board-tab{flex-shrink:0;padding:7px 13px;border-radius:18px;background:#fff;font-size:13px;color:#555;border:1px solid #eee;cursor:pointer}
 .board-tab.on{background:#2D7FF9;color:#fff;border-color:#2D7FF9}
-.post-card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer}
-.pc-title{font-size:16px;font-weight:600;margin-bottom:6px}
+.ad-box{position:relative;border-radius:14px;overflow:hidden;margin:8px 0 12px;background:#fff}
+.ad-track{display:flex;transition:transform .4s}
+.ad-item{min-width:100%;padding:14px 16px;background:linear-gradient(135deg,#7C6FF0,#2D7FF9);color:#fff;cursor:pointer}
+.ad-item .at{font-size:15px;font-weight:700}
+.ad-item .as{font-size:12px;opacity:.9;margin-top:2px}
+.ad-dots{position:absolute;bottom:6px;right:10px;display:flex;gap:4px}
+.ad-dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5)}
+.ad-dots span.on{background:#fff}
+.post-card{background:#fff;border-radius:14px;padding:13px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer}
+.pc-title{font-size:16px;font-weight:600;margin-bottom:5px}
 .pc-body{font-size:14px;color:#555;line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
-.pc-meta{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:12px;color:#999;flex-wrap:wrap}
+.pc-img{width:100%;border-radius:10px;margin-top:8px;max-height:200px;object-fit:cover;position:relative}
+.pc-meta{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:#999;flex-wrap:wrap}
 .lv{background:#ff9500;color:#fff;font-size:10px;border-radius:4px;padding:1px 4px}
-.empty{text-align:center;color:#aaa;padding:50px 0;font-size:14px}
-.form-label{font-size:14px;font-weight:600;margin:14px 0 8px}
+.empty{text-align:center;color:#aaa;padding:36px 0;font-size:14px}
+.form-label{font-size:14px;font-weight:600;margin:10px 0 6px}
 .chip-wrap{display:flex;flex-wrap:wrap;gap:8px}
 .chip{padding:7px 12px;border-radius:16px;background:#fff;border:1px solid #ddd;font-size:13px;cursor:pointer}
 .chip.on{background:#2D7FF9;color:#fff;border-color:#2D7FF9}
-.detail-title{font-size:19px;font-weight:700;line-height:1.4;margin-bottom:10px}
-.detail-meta{display:flex;align-items:center;gap:8px;font-size:12px;color:#999;margin-bottom:14px;flex-wrap:wrap}
+.upload-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px dashed #bbb;border-radius:12px;padding:9px 13px;font-size:13px;color:#666;cursor:pointer;margin-top:4px}
+.detail-title{font-size:19px;font-weight:700;line-height:1.4;margin-bottom:8px}
+.detail-meta{display:flex;align-items:center;gap:8px;font-size:12px;color:#999;margin-bottom:12px;flex-wrap:wrap}
 .detail-body{font-size:15px;line-height:1.8;color:#333;white-space:pre-wrap;word-break:break-word}
-.detail-actions{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap}
-.action-btn{flex:1;min-width:100px;height:42px;border-radius:12px;border:1px solid #ddd;background:#fff;font-size:14px;cursor:pointer}
+.detail-actions{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
+.action-btn{flex:1;min-width:80px;height:38px;border-radius:12px;border:1px solid #ddd;background:#fff;font-size:13px;cursor:pointer}
 .action-btn.on{border-color:#e5484d;color:#e5484d}
 .action-btn.warn{border-color:#ff9500;color:#ff9500}
-.comment-box{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px}
-.cb-name{font-size:13px;color:#2D7FF9;font-weight:600}
+.action-btn.fav{border-color:#7C6FF0;color:#7C6FF0}
+.comment-box{background:#fff;border-radius:14px;padding:11px;margin-bottom:9px}
+.cb-name{font-size:13px;color:#2D7FF9;font-weight:600;cursor:pointer}
 .cb-text{font-size:14px;color:#444;margin-top:4px;line-height:1.6;word-break:break-word}
-.cb-time{font-size:11px;color:#bbb;margin-top:6px}
-.cm-input-wrap{display:flex;gap:8px;position:fixed;bottom:0;left:0;right:0;padding:10px;background:#fff;box-shadow:0 -1px 6px rgba(0,0,0,.06);z-index:99}
-.cm-input-wrap input{flex:1;height:42px;border:1px solid #ddd;border-radius:21px;padding:0 16px;font-size:14px;outline:none}
-.cm-input-wrap button{width:72px;height:42px;border:none;border-radius:21px;background:#2D7FF9;color:#fff;font-size:14px}
+.cb-img{width:100%;border-radius:10px;margin-top:6px;max-height:180px;object-fit:cover}
+.cb-time{font-size:11px;color:#bbb;margin-top:5px}
+.cm-input-wrap{display:flex;gap:8px;position:fixed;bottom:0;left:0;right:0;padding:10px;background:#fff;box-shadow:0 -1px 6px rgba(0,0,0,.06);z-index:99;align-items:center}
+.cm-input-wrap input{flex:1;height:40px;border:1px solid #ddd;border-radius:20px;padding:0 14px;font-size:14px;outline:none}
+.cm-input-wrap button{width:64px;height:40px;border:none;border-radius:20px;background:#2D7FF9;color:#fff;font-size:13px;flex-shrink:0}
+.cm-input-wrap .cmi{font-size:20px;cursor:pointer;flex-shrink:0}
 #bottomNav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;border-top:1px solid #eee;z-index:98}
-.nav-item{flex:1;text-align:center;padding:9px 0 7px;font-size:11px;color:#888;cursor:pointer}
-.nav-item .ico{font-size:20px;display:block;margin-bottom:2px}
+.nav-item{flex:1;text-align:center;padding:8px 0 6px;font-size:11px;color:#888;cursor:pointer}
+.nav-item .ico{font-size:20px;display:block;margin-bottom:1px}
 .nav-item.on{color:#2D7FF9}
-.menu-card{background:#fff;border-radius:14px;padding:6px 0;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-.menu-item{display:flex;align-items:center;padding:13px 16px;font-size:15px;border-bottom:1px solid #f4f4f4;cursor:pointer}
+.menu-card{background:#fff;border-radius:14px;padding:5px 0;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.menu-item{display:flex;align-items:center;padding:12px 14px;font-size:14px;border-bottom:1px solid #f4f4f4;cursor:pointer}
 .menu-item:last-child{border-bottom:none}
-.menu-item .mi-ico{font-size:20px;margin-right:12px}
-.menu-item .mi-arrow{margin-left:auto;color:#ccc}
-.stat-card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-around;text-align:center}
-.stat-num{font-size:24px;font-weight:700}
-.stat-label{font-size:12px;color:#999;margin-top:2px}
-.rank-item{display:flex;align-items:center;background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:8px}
-.rank-no{width:30px;font-size:16px;font-weight:700;color:#bbb;text-align:center}
-.rank-no.top1{color:#f5a623}.rank-no.top2{color:#8a8a8a}.rank-no.top3{color:#c98a4b}
-.rank-name{flex:1;font-size:15px;margin-left:10px}
-.rank-val{font-size:13px;color:#ff9500;font-weight:600}
-.rules{background:#fff;border-radius:14px;padding:18px;font-size:14px;line-height:1.9;color:#333}
-.rules h3{font-size:16px;margin:16px 0 8px;color:#2D7FF9}
-.rules h3:first-child{margin-top:0}
-.pomo-wrap{text-align:center;padding:30px 0}
-.pomo-time{font-size:64px;font-weight:700;color:#2D7FF9;font-family:monospace}
-.pomo-btns{display:flex;gap:10px;justify-content:center;margin-top:24px}
-.pomo-btns .btn{width:110px}
-.course-card{display:flex;align-items:center;background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-.cc-ico{width:44px;height:44px;border-radius:12px;line-height:44px;text-align:center;font-size:22px;color:#fff;margin-right:12px;flex-shrink:0}
-.cc-title{font-size:15px;font-weight:600}
-.cc-sub{font-size:12px;color:#999;margin-top:3px}
-.res-card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-.res-title{font-size:15px;font-weight:600;margin-bottom:4px}
-.res-desc{font-size:13px;color:#666;line-height:1.6;margin-bottom:8px}
-.res-link{display:inline-block;background:#2D7FF9;color:#fff;font-size:12px;padding:6px 14px;border-radius:16px;text-decoration:none}
-.res-tag{display:inline-block;font-size:11px;background:#eee;color:#666;border-radius:4px;padding:1px 6px;margin-left:6px}
-.report-card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px}
-.rc-title{font-size:14px;font-weight:600;margin-bottom:6px}
-.rc-body{font-size:13px;color:#555;background:#f7f8fa;border-radius:8px;padding:10px;margin-bottom:8px;word-break:break-word}
-.rc-btns{display:flex;gap:8px;flex-wrap:wrap}
-.rc-btns .btn{width:auto;flex:1;min-width:80px;height:38px;font-size:13px;margin:0}
-.modal-mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:200;justify-content:center;align-items:flex-end}
-.modal-mask.show{display:flex}
-.modal{background:#fff;border-radius:16px 16px 0 0;width:100%;max-width:520px;padding:20px 18px 26px;animation:up .2s}
-@keyframes up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
-.modal h3{font-size:17px;text-align:center;margin-bottom:16px}
-.tip-coins{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
-.tip-coins .chip{font-size:16px;padding:10px 14px}
-#toast{position:fixed;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);color:#fff;padding:12px 22px;border-radius:10px;font-size:14px;z-index:300;display:none;max-width:80%;text-align:center}
-img.pt-img{width:100%;border-radius:10px;margin-top:10px}
-.small-tab{display:flex;background:#fff;border-radius:12px;margin-bottom:14px;overflow:hidden}
-.small-tab div{flex:1;text-align:center;padding:11px 0;font-size:14px;color:#888;cursor:pointer}
+.mi-ico{font-size:19px;margin-right:10px}
+.mi-arrow{margin-left:auto;color:#ccc}
+.small-tab{display:flex;background:#fff;border-radius:12px;margin-bottom:12px;overflow:hidden}
+.small-tab div{flex:1;text-align:center;padding:10px 0;font-size:13px;color:#888;cursor:pointer}
 .small-tab div.on{color:#2D7FF9;font-weight:700;border-bottom:2px solid #2D7FF9}
+.stat-card{background:#fff;border-radius:14px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-around;text-align:center}
+.stat-num{font-size:22px;font-weight:700}
+.stat-label{font-size:11px;color:#999;margin-top:2px}
+.grid-8{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:14px;padding:10px 6px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.grid-item{text-align:center;padding:10px 2px;cursor:pointer}
+.grid-item .gi{font-size:22px}
+.grid-item .gt{font-size:11px;color:#666;margin-top:4px}
+.notice-bar{background:linear-gradient(135deg,#fff7e6,#fff);border:1px solid #ffe0a3;border-radius:12px;padding:10px 13px;margin-bottom:10px;font-size:12px;color:#8a6d1a;cursor:pointer}
+.profile-top{background:#fff;border-radius:14px;padding:18px 16px;text-align:center;margin-bottom:10px}
+.pt-avatar{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#2D7FF9,#7C6FF0);color:#fff;line-height:70px;font-size:30px;margin:0 auto 8px;cursor:pointer}
+.pt-name{font-size:18px;font-weight:700}
+.pt-tag{font-size:11px;background:#e5484d;color:#fff;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+.pt-exp{background:#eee;border-radius:8px;height:8px;margin:10px 28px 0;overflow:hidden}
+.pt-exp i{display:block;height:100%;background:linear-gradient(90deg,#2D7FF9,#7C6FF0)}
+.pt-exp-t{font-size:11px;color:#999;margin-top:4px}
+.profile-bio{font-size:13px;color:#666;margin-top:8px;white-space:pre-wrap}
+.follow-btn{display:inline-block;margin-top:10px;padding:7px 26px;border-radius:18px;font-size:13px;cursor:pointer}
+.his-card{background:#fff;border-radius:12px;padding:11px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.his-card .ht{flex:1;font-size:14px}
+.his-card .hd{font-size:11px;color:#bbb}
+.notif-item{background:#fff;border-radius:12px;padding:11px 13px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}
+.notif-item.unread{background:#f0f5ff}
+.notif-ico{font-size:18px}
+.notif-text{font-size:13px;color:#333;line-height:1.5;flex:1}
+.notif-time{font-size:11px;color:#bbb;margin-top:2px}
+.fav-card{background:#fff;border-radius:14px;padding:12px;margin-bottom:11px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer}
+.fav-card .fc-title{font-size:14px;font-weight:600}
+.fav-card .fc-sub{font-size:12px;color:#999;margin-top:3px}
+.video-card{background:#fff;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer}
+.video-cover{height:140px;background:linear-gradient(135deg,#fb7299,#7C6FF0);display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px}
+.video-info{padding:9px 12px}
+.video-info .vt{font-size:14px;font-weight:600}
+.video-info .vs{font-size:12px;color:#999;margin-top:2px}
+.res-card{background:#fff;border-radius:14px;padding:12px;margin-bottom:11px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer}
+.rc-title{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.rc-desc{font-size:12px;color:#666;line-height:1.6;margin-top:4px}
+.res-tag{display:inline-block;font-size:11px;background:#eee;color:#666;border-radius:4px;padding:1px 6px}
+.rank-item{display:flex;align-items:center;background:#fff;border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.rank-no{width:26px;font-size:15px;font-weight:700;color:#bbb;text-align:center}
+.rank-no.top1{color:#f5a623}.rank-no.top2{color:#8a8a8a}.rank-no.top3{color:#c98a4b}
+.rank-name{flex:1;font-size:14px;margin-left:8px}
+.rank-val{font-size:12px;color:#ff9500;font-weight:600}
+.rules{background:#fff;border-radius:14px;padding:16px;font-size:13px;line-height:1.9;color:#333}
+.report-card{background:#fff;border-radius:14px;padding:12px;margin-bottom:11px}
+.rc-body{font-size:12px;color:#555;background:#f7f8fa;border-radius:8px;padding:9px;margin:8px 0;word-break:break-word}
+.rc-btns{display:flex;gap:8px;flex-wrap:wrap}
+.rc-btns .btn{width:auto;flex:1;min-width:70px;height:34px;font-size:12px;margin:0}
+.modal-mask{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:200;justify-content:center;align-items:center;padding:20px}
+.modal-mask.show{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:420px;padding:22px 20px;max-height:80vh;overflow:auto;animation:up .2s}
+@keyframes up{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.modal h3{font-size:17px;text-align:center;margin-bottom:12px}
+.modal-body{font-size:13px;line-height:1.9;color:#444}
+#toast{position:fixed;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);color:#fff;padding:11px 20px;border-radius:10px;font-size:14px;z-index:300;display:none;max-width:80%;text-align:center}
+.wm{position:relative}
+.wm .watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-20deg);color:rgba(255,255,255,.75);font-size:13px;background:rgba(0,0,0,.35);padding:3px 10px;border-radius:6px;pointer-events:none;white-space:nowrap}
+.at-sel{position:fixed;bottom:56px;left:0;right:0;background:#fff;border-top:1px solid #eee;max-height:200px;overflow:auto;z-index:97;display:none}
+.at-sel .at-i{padding:11px 16px;font-size:14px;border-bottom:1px solid #f4f4f4;cursor:pointer}
 </style>
 </head>
 <body>
 
 <!-- 登录 -->
 <div id="loginPage" class="page active">
-  <div class="logo">花</div>
-  <h1>花学社</h1>
-  <div class="sub">仅限 QQ 邮箱登录 · 学习社区</div>
-  <div style="max-width:320px;margin:0 auto;">
-    <input id="loginEmail" class="inp" type="email" placeholder="输入 QQ 邮箱（如 123456@qq.com）">
-    <button id="sendCodeBtn" class="btn" onclick="sendCode()">发送验证码</button>
-    <div style="height:6px"></div>
-    <input id="loginCode" class="inp" type="text" placeholder="输入收到的 6 位验证码" style="text-align:center;letter-spacing:4px">
-    <button id="loginBtn" class="btn" onclick="doLogin()">登录 / 注册</button>
-    <div class="err" id="loginErr"></div>
-    <div class="tip">验证码发送到你的 QQ 邮箱 · 未注册邮箱将自动注册<br>一人一号 · 违规将被禁言/封号/封设备</div>
+  <div style="text-align:center;padding-top:10vh">
+    <div class="logo" style="width:80px;height:80px;border-radius:22px;background:linear-gradient(135deg,#2D7FF9,#7C6FF0);color:#fff;font-size:40px;line-height:80px;margin:0 auto 12px;font-weight:bold">花</div>
+    <h1 style="font-size:24px;margin-bottom:4px">花学社</h1>
+    <div style="color:#888;font-size:13px;margin-bottom:22px">QQ 号注册登录 · 学习社区</div>
+    <div style="max-width:320px;margin:0 auto">
+      <input id="loginQQ" class="inp" type="text" inputmode="numeric" placeholder="QQ 号">
+      <input id="loginName" class="inp" type="text" placeholder="用户名（注册时填）" style="display:none">
+      <input id="loginPass" class="inp" type="password" placeholder="密码">
+      <input id="loginPass2" class="inp" type="password" placeholder="确认密码" style="display:none">
+      <input id="loginInvite" class="inp" type="text" placeholder="邀请码（选填，双方有奖）" style="display:none">
+      <div id="captchaRow" style="display:none;margin-bottom:10px">
+        <canvas id="captcha" width="100" height="40" onclick="drawCaptcha()" style="border-radius:8px;cursor:pointer;vertical-align:middle"></canvas>
+        <input id="loginCaptcha" class="inp" type="text" placeholder="输入右侧验证码" style="width:calc(100% - 112px);display:inline-block;margin-bottom:0;vertical-align:middle">
+      </div>
+      <button id="loginBtn" class="btn" onclick="doLogin()">登 录</button>
+      <div id="regToggle" class="btn btn-plain" onclick="toggleReg()">没有账号？注册</div>
+      <div class="err" id="loginErr"></div>
+      <div class="tip">一人一号 · 注册需输验证码防机器人 · 填邀请码双方有奖</div>
+    </div>
+  </div>
+</div>
+
+<!-- 新用户弹窗 -->
+<div class="modal-mask" id="welcomeModal">
+  <div class="modal">
+    <h3>欢迎加入花学社 🎉</h3>
+    <div class="modal-body" id="welcomeBody"></div>
+    <button class="btn" style="margin-top:16px" onclick="closeWelcome()">我已阅读，开始学习</button>
   </div>
 </div>
 
 <!-- 首页 -->
 <div id="mainPage" class="page">
-  <header>
-    <h2>🌸 花学社</h2>
-    <div style="display:flex;gap:10px;align-items:center">
-      <span style="font-size:20px;cursor:pointer" onclick="goPage('coursePage')">📺</span>
-      <span style="font-size:20px;cursor:pointer" onclick="goPage('pomoPage')">🍅</span>
-      <span style="font-size:20px;cursor:pointer" onclick="goPage('mePage')">👤</span>
-    </div>
-  </header>
+  <div class="topbar">
+    <div class="top-avatar" id="topAvatar" onclick="goPage('mePage')">👤</div>
+    <div class="search-bar"><input id="searchInput" placeholder="搜索…" onkeydown="if(event.key==='Enter')doSearch()"></div>
+    <div class="top-btn" onclick="goPage('postPage')">➕</div>
+    <div class="top-btn" onclick="goPage('infoPage')">🔔<span class="badge" id="topBadge" style="display:none">0</span></div>
+  </div>
   <div id="boards"></div>
+  <div class="ad-box" id="adBox"><div class="ad-track" id="adTrack"></div><div class="ad-dots" id="adDots"></div></div>
+  <div id="searchTabs" style="display:none" class="small-tab">
+    <div id="st1" class="on" onclick="setSearchTab('post')">帖子</div>
+    <div id="st2" onclick="setSearchTab('app')">应用</div>
+    <div id="st3" onclick="setSearchTab('video')">教程</div>
+    <div id="st4" onclick="setSearchTab('user')">用户</div>
+  </div>
   <div id="postList"><div class="empty">加载中...</div></div>
 </div>
 
@@ -146,9 +203,12 @@ img.pt-img{width:100%;border-radius:10px;margin-top:10px}
   <div class="form-label">标题</div>
   <input id="pTitle" class="inp" type="text" maxlength="40" placeholder="一句话说清主题">
   <div class="form-label">内容</div>
-  <textarea id="pContent" class="inp" placeholder="分享你的内容…&#10;（版规：禁止链接、二维码、广告）"></textarea>
+  <textarea id="pContent" class="inp" placeholder="分享你的内容…（禁链接/二维码/违禁词）" onfocus="showAt('post')"></textarea>
+  <div class="form-label">图片（可选）</div>
+  <label class="upload-btn">📷 添加图片<input type="file" id="pImg" accept="image/*" style="display:none" onchange="pickImg(this)"></label>
+  <div id="imgPreview"></div>
   <div class="err" id="postErr"></div>
-  <button class="btn" style="margin-top:16px" onclick="submitPost()">发布</button>
+  <button class="btn" style="margin-top:12px" onclick="submitPost()">发布</button>
 </div>
 
 <!-- 详情 -->
@@ -159,22 +219,62 @@ img.pt-img{width:100%;border-radius:10px;margin-top:10px}
   <div style="height:60px"></div>
 </div>
 
-<!-- 我的 -->
-<div id="mePage" class="page">
-  <header><span class="back" onclick="goPage('mainPage')">←</span><h2>我的</h2><span style="width:24px"></span></header>
-  <div id="meCard"></div>
-  <div class="menu-card" style="margin-top:6px">
-    <div class="menu-item" onclick="goPage('signPage')"><span class="mi-ico">📅</span>每日签到<span class="mi-arrow">›</span></div>
-    <div class="menu-item" onclick="goPage('rankPage')"><span class="mi-ico">🏆</span>排行榜<span class="mi-arrow">›</span></div>
-    <div class="menu-item" onclick="goPage('resourcePage')"><span class="mi-ico">📚</span>学习资源（网盘）<span class="mi-arrow">›</span></div>
-    <div class="menu-item" onclick="goPage('coursePage')"><span class="mi-ico">📺</span>课程入口（B站/抖音）<span class="mi-arrow">›</span></div>
-    <div class="menu-item" onclick="goPage('pomoPage')"><span class="mi-ico">🍅</span>番茄时钟<span class="mi-arrow">›</span></div>
-    <div class="menu-item" onclick="joinQQ()"><span class="mi-ico">💬</span>加入QQ群<span class="mi-arrow">›</span></div>
-    <div class="menu-item" onclick="joinChannel()"><span class="mi-ico">📢</span>加入QQ频道<span class="mi-arrow">›</span></div>
-    <div class="menu-item" onclick="goPage('rulesPage')"><span class="mi-ico">📜</span>社区版规<span class="mi-arrow">›</span></div>
-    <div class="menu-item" id="adminEntry" style="display:none" onclick="goPage('adminPage')"><span class="mi-ico">🛡️</span>管理员后台<span class="mi-arrow">›</span></div>
-    <div class="menu-item" onclick="logout()"><span class="mi-ico">🚪</span>退出登录<span class="mi-arrow">›</span></div>
+<!-- 用户主页 -->
+<div id="userPage" class="page">
+  <header><span class="back" onclick="history.back()">←</span><h2>个人主页</h2><span style="width:24px"></span></header>
+  <div id="userBox"></div>
+  <div class="small-tab" style="margin-top:4px">
+    <div id="ut1" class="on" onclick="loadUserPosts('posts')">📝 帖子</div>
+    <div id="ut2" onclick="loadUserPosts('comments')">💬 评论</div>
   </div>
+  <div id="userList" class="empty">加载中...</div>
+</div>
+
+<!-- 个人中心 -->
+<div id="mePage" class="page">
+  <header><span class="back" onclick="goPage('mainPage')">←</span><h2>个人中心</h2><span style="width:24px"></span></header>
+  <div id="meProfile"></div>
+  <div class="grid-8" id="meGrid"></div>
+  <div class="notice-bar" onclick="goPage('rulesPage')">📢 版规及规则：点击查看《花学社社区总版规》</div>
+  <div class="form-label" style="margin-bottom:8px">🕘 浏览历史</div>
+  <div id="historyList"><div class="empty" style="padding:10px 0">暂无记录</div></div>
+</div>
+
+<!-- 编辑资料 -->
+<div id="editPage" class="page">
+  <header><span class="back" onclick="goPage('mePage')">←</span><h2>编辑资料</h2><span style="width:24px"></span></header>
+  <div class="form-label">头像</div>
+  <label class="upload-btn">🖼️ 更换头像<input type="file" id="eAvatar" accept="image/*" style="display:none" onchange="pickAvatar(this)"></label>
+  <div class="form-label">简介</div>
+  <textarea id="eBio" class="inp" style="height:80px" placeholder="介绍一下自己吧…"></textarea>
+  <div class="form-label">背景美化（仅自己可见）</div>
+  <div class="chip-wrap" id="bgChips"></div>
+  <div class="err" id="editErr"></div>
+  <button class="btn" style="margin-top:12px" onclick="saveProfile()">保存</button>
+</div>
+
+<!-- 邀请好友 -->
+<div id="invitePage" class="page">
+  <header><span class="back" onclick="goPage('mePage')">←</span><h2>邀请好友</h2><span style="width:24px"></span></header>
+  <div id="inviteBox"></div>
+</div>
+
+<!-- 收藏 -->
+<div id="favPage" class="page">
+  <header><span class="back" onclick="goPage('mePage')">←</span><h2>我的收藏</h2><span style="width:24px"></span></header>
+  <div class="search-bar" style="margin-bottom:10px"><input id="favSearch" placeholder="搜索收藏…" onkeydown="if(event.key==='Enter')loadFavs(currentFavType)"></div>
+  <div class="small-tab">
+    <div id="favTab1" class="on" onclick="loadFavs('app')">📱应用</div>
+    <div id="favTab2" onclick="loadFavs('course')">📺课程</div>
+    <div id="favTab3" onclick="loadFavs('post')">📝帖子</div>
+  </div>
+  <div id="favList"><div class="empty">加载中...</div></div>
+</div>
+
+<!-- 信息 -->
+<div id="infoPage" class="page">
+  <header><span class="back" onclick="goPage('mainPage')">←</span><h2>我的信息</h2><span style="width:24px"></span></header>
+  <div id="infoList"><div class="empty">加载中...</div></div>
 </div>
 
 <!-- 签到 -->
@@ -186,90 +286,90 @@ img.pt-img{width:100%;border-radius:10px;margin-top:10px}
 <!-- 排行榜 -->
 <div id="rankPage" class="page">
   <header><span class="back" onclick="goPage('mePage')">←</span><h2>排行榜</h2><span style="width:24px"></span></header>
-  <div class="small-tab">
-    <div id="tabGood" class="on" onclick="loadRank('good')">🏆 好评榜</div>
-    <div id="tabLevel" onclick="loadRank('level')">👑 等级榜</div>
-  </div>
+  <div class="small-tab"><div id="tabGood" class="on" onclick="loadRank('good')">🏆 好评榜</div><div id="tabLevel" onclick="loadRank('level')">👑 等级榜</div></div>
   <div id="rankList" class="empty">加载中...</div>
 </div>
 
 <!-- 版规 -->
 <div id="rulesPage" class="page">
-  <header><span class="back" onclick="goPage('mePage')">←</span><h2>社区版规</h2><span style="width:24px"></span></header>
+  <header><span class="back" onclick="goPage('mainPage')">←</span><h2>社区版规</h2><span style="width:24px"></span></header>
   <div class="rules" id="rulesBox"></div>
-</div>
-
-<!-- 番茄钟 -->
-<div id="pomoPage" class="page">
-  <header><span class="back" onclick="goPage('mePage')">←</span><h2>番茄时钟</h2><span style="width:24px"></span></header>
-  <div class="pomo-wrap">
-    <div class="pomo-time" id="pomoTime">25:00</div>
-    <div style="color:#999;font-size:13px;margin-top:10px" id="pomoState">专注 25 分钟</div>
-    <div class="pomo-btns">
-      <button class="btn" id="pomoBtn" onclick="pomoStart()">开始</button>
-      <button class="btn btn-plain" onclick="pomoReset()">重置</button>
-    </div>
-  </div>
 </div>
 
 <!-- 课程 -->
 <div id="coursePage" class="page">
-  <header><span class="back" onclick="goPage('mePage')">←</span><h2>课程入口</h2><span style="width:24px"></span></header>
+  <header><span class="back" onclick="goPage('mainPage')">←</span><h2>课程入口</h2><span style="width:24px"></span></header>
   <div id="courseList"></div>
-  <div class="tip" style="text-align:center">点击卡片将跳转到对应平台观看</div>
+  <div class="tip" style="text-align:center">点击卡片跳转到对应平台观看</div>
 </div>
 
-<!-- 资源专区 -->
+<!-- 资源 -->
 <div id="resourcePage" class="page">
-  <header><span class="back" onclick="goPage('mePage')">←</span><h2>学习资源</h2><span style="width:24px"></span></header>
-  <div id="resAdminBox" style="display:none;background:#fff;border-radius:14px;padding:14px;margin-bottom:14px">
-    <div class="form-label" style="margin-top:0">发布资源（仅管理员）</div>
-    <input id="rTitle" class="inp" placeholder="资源标题">
-    <input id="rDesc" class="inp" placeholder="简介（可选）">
-    <div class="chip-wrap" style="margin-bottom:10px" id="panChips"></div>
-    <input id="rLink" class="inp" placeholder="网盘链接">
-    <button class="btn" onclick="submitResource()">发布</button>
-  </div>
+  <header><span class="back" onclick="goPage('mainPage')">←</span><h2>学习资源</h2><span style="width:24px"></span></header>
+  <div class="small-tab"><div id="resTab1" class="on" onclick="loadResources('video')">🎬 教程视频</div><div id="resTab2" onclick="loadResources('app')">📱 应用</div></div>
+  <button class="btn" id="resPostBtn" style="display:none;margin-bottom:12px" onclick="goPage('resPostPage')">➕ 上传资源（管理员）</button>
   <div id="resList"><div class="empty">加载中...</div></div>
+</div>
+
+<!-- 上传资源 -->
+<div id="resPostPage" class="page">
+  <header><span class="back" onclick="goPage('resourcePage')">←</span><h2>上传资源</h2><span style="width:24px"></span></header>
+  <div class="form-label">类型</div>
+  <div class="chip-wrap" id="resTypeChips"></div>
+  <div class="form-label">图标 / 封面</div>
+  <label class="upload-btn">🖼️ 选择图片<input type="file" id="resImg" accept="image/*" style="display:none" onchange="pickResImg(this)"></label>
+  <div id="resImgPreview"></div>
+  <div class="form-label">标题</div>
+  <input id="resTitle" class="inp" type="text" maxlength="40" placeholder="资源标题">
+  <div class="form-label">介绍</div>
+  <textarea id="resDesc" class="inp" style="height:80px" placeholder="简单介绍（可选）"></textarea>
+  <div class="form-label">链接</div>
+  <input id="resLink" class="inp" type="text" placeholder="跳转链接">
+  <div class="err" id="resErr"></div>
+  <button class="btn" style="margin-top:12px" onclick="submitResource()">发布资源</button>
+</div>
+
+<!-- 应用详情 -->
+<div id="appDetailPage" class="page">
+  <header><span class="back" onclick="goPage('resourcePage')">←</span><h2>资源详情</h2><span style="width:24px"></span></header>
+  <div id="appDetailBox"></div>
 </div>
 
 <!-- 管理员后台 -->
 <div id="adminPage" class="page">
   <header><span class="back" onclick="goPage('mePage')">←</span><h2>管理员后台</h2><span style="width:24px"></span></header>
-  <div class="small-tab">
-    <div id="aTab1" class="on" onclick="loadAdmin('reports')">📮 举报处理</div>
-    <div id="aTab2" onclick="loadAdmin('punish')">⚖️ 处罚操作</div>
-  </div>
+  <div class="small-tab"><div id="aTab1" class="on" onclick="loadAdmin('reports')">📮 举报处理</div><div id="aTab2" onclick="loadAdmin('punish')">⚖️ 处罚操作</div></div>
   <div id="adminBox" class="empty">加载中...</div>
 </div>
 
 <div id="bottomNav">
   <div class="nav-item on" data-p="mainPage"><span class="ico">🏠</span>社区</div>
-  <div class="nav-item" data-p="postPage"><span class="ico">✏️</span>发帖</div>
   <div class="nav-item" data-p="resourcePage"><span class="ico">📚</span>资源</div>
   <div class="nav-item" data-p="mePage"><span class="ico">👤</span>我的</div>
 </div>
 
 <!-- 评论输入条 -->
 <div class="cm-input-wrap" id="cmBar" style="display:none">
-  <input id="cmInput" placeholder="友善评论，禁止链接/二维码…">
+  <span class="cmi" onclick="showAt('comment')">@</span>
+  <label class="cmi">📷<input type="file" id="cmImg" accept="image/*" style="display:none" onchange="pickCmImg(this)"></label>
+  <input id="cmInput" placeholder="友善评论…">
   <button onclick="submitComment()">发送</button>
 </div>
+<div class="at-sel" id="atSel"></div>
 
 <!-- 打赏弹层 -->
 <div class="modal-mask" id="tipModal" onclick="if(event.target===this)hideTip()">
   <div class="modal">
     <h3>感谢支持 🎁</h3>
-    <div class="tip" style="text-align:center">送一个好评（作者+5信誉分）</div>
-    <button class="btn" style="margin:12px 0" onclick="doTip('good',0)">❤️ 送好评</button>
-    <div class="tip" style="text-align:center">或打赏硬币（1~10 枚）</div>
-    <div class="tip-coins" id="tipCoins"></div>
+    <div class="modal-body" style="text-align:center">送一个好评（作者+5信誉分）</div>
+    <button class="btn" style="margin:10px 0" onclick="doTip('good',0)">❤️ 送好评</button>
+    <div class="modal-body" style="text-align:center">或打赏硬币（1~10 枚）</div>
+    <div class="chip-wrap" style="justify-content:center;margin:8px 0" id="tipCoins"></div>
     <button class="btn btn-plain" onclick="hideTip()">取消</button>
   </div>
 </div>
 
 <div id="toast"></div>
-
 <script src="config.js"></script>
 <script src="app.js"></script>
 </body>
