@@ -1,25 +1,21 @@
 name: Build APK
 "on":
   workflow_dispatch:
-  push:
-    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
 
-      - name: 准备网页+混淆
+      - name: 准备网页+混淆app.js
         run: |
           npm install -g javascript-obfuscator 2>/dev/null
           mkdir -p web
@@ -71,42 +67,46 @@ jobs:
         run: |
           PASS="${{ secrets.KEYSTORE_PASS }}"
           if [ -z "$PASS" ]; then
-            echo "请先在 Settings Secrets 添加 KEYSTORE_PASS"
+            echo "请先在Settings Secrets添加KEYSTORE_PASS"
             exit 1
           fi
           if [ -f "huaxueshe.keystore.enc" ]; then
             openssl enc -d -aes-256-cbc -in huaxueshe.keystore.enc -out huaxueshe.keystore -k "$PASS" -md md5 2>/dev/null || { echo "解密失败"; exit 1; }
-            echo "已解密仓库中的密钥"
           else
             keytool -genkeypair -v -keystore huaxueshe.keystore -alias huaxueshe -keyalg RSA -keysize 2048 -validity 10000 -storepass "$PASS" -keypass "$PASS" -dname "CN=huaxueshe, OU=dev, O=huaxueshe, L=Beijing, ST=Beijing, C=CN" 2>/dev/null
             openssl enc -aes-256-cbc -in huaxueshe.keystore -out huaxueshe.keystore.enc -k "$PASS" -md md5
-            echo "新密钥已生成并加密，请下载保存enc文件"
           fi
 
-      - name: 构建APK
+      - name: 构建
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleRelease 2>&1 | tee /tmp/build.log
         continue-on-error: true
 
-      - name: 签名校验
+      - name: 签名并提取APK
         run: |
-          BT=$(ls -d ${ANDROID_SDK_ROOT:-$ANDROID_HOME}/build-tools/* 2>/dev/null | tail -1)
           PASS="${{ secrets.KEYSTORE_PASS }}"
-          UNSIGNED=android/app/build/outputs/apk/release/app-release-unsigned.apk
-          if [ -f "$UNSIGNED" ]; then
-            "$BT/apksigner" sign --ks huaxueshe.keystore --ks-pass pass:"$PASS" --out /tmp/app-release.apk "$UNSIGNED" 2>/dev/null || cp "$UNSIGNED" /tmp/app-release.apk
-            "$BT/apksigner" verify /tmp/app-release.apk && echo "签名校验通过"
+          BT=$(ls -d ${ANDROID_SDK_ROOT:-$ANDROID_HOME}/build-tools/* 2>/dev/null | tail -1)
+          APK=$(find android/app/build/outputs -name "*.apk" | head -1)
+          echo "找到APK: $APK"
+          if [ -n "$APK" ]; then
+            "$BT/apksigner" sign --ks huaxueshe.keystore --ks-pass pass:"$PASS" --out /tmp/huaxueshe.apk "$APK" 2>/dev/null || cp "$APK" /tmp/huaxueshe.apk
+            "$BT/apksigner" verify /tmp/huaxueshe.apk && echo "签名OK"
           else
-            cp android/app/build/outputs/apk/debug/app-debug.apk /tmp/app-release.apk 2>/dev/null || echo "未找到APK"
+            echo "未找到APK，构建失败"
           fi
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: huaxueshe-apk
+          name: 花学社-安卓App
+          path: /tmp/huaxueshe.apk
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 密钥和日志
           path: |
-            /tmp/app-release.apk
             huaxueshe.keystore.enc
             /tmp/build.log
