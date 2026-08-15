@@ -63,6 +63,11 @@ jobs:
           }
           EOF
 
+      - name: 修复Kotlin版本冲突
+        run: |
+          sed -i '1i configurations.all { resolutionStrategy { force "org.jetbrains.kotlin:kotlin-stdlib:1.8.22" } }' android/app/build.gradle
+          echo "Kotlin版本已统一为1.8.22"
+
       - name: 准备签名密钥
         run: |
           PASS="${{ secrets.KEYSTORE_PASS }}"
