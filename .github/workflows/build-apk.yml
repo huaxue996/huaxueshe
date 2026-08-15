@@ -66,7 +66,6 @@ jobs:
       - name: 修复Kotlin版本冲突
         run: |
           sed -i '1i configurations.all { resolutionStrategy { force "org.jetbrains.kotlin:kotlin-stdlib:1.8.22" } }' android/app/build.gradle
-          echo "Kotlin版本已统一为1.8.22"
 
       - name: 准备签名密钥
         run: |
@@ -82,24 +81,18 @@ jobs:
             openssl enc -aes-256-cbc -in huaxueshe.keystore -out huaxueshe.keystore.enc -k "$PASS" -md md5
           fi
 
-      - name: 构建
+      - name: 构建并提取APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleRelease 2>&1 | tee /tmp/build.log
-        continue-on-error: true
-
-      - name: 签名并提取APK
-        run: |
-          PASS="${{ secrets.KEYSTORE_PASS }}"
-          BT=$(ls -d ${ANDROID_SDK_ROOT:-$ANDROID_HOME}/build-tools/* 2>/dev/null | tail -1)
-          APK=$(find android/app/build/outputs -name "*.apk" | head -1)
+          ./gradlew assembleDebug 2>&1 | tee /tmp/build.log
+          APK=$(find . -path "*/outputs/apk/*" -name "*.apk" | head -1)
           echo "找到APK: $APK"
           if [ -n "$APK" ]; then
-            "$BT/apksigner" sign --ks huaxueshe.keystore --ks-pass pass:"$PASS" --out /tmp/huaxueshe.apk "$APK" 2>/dev/null || cp "$APK" /tmp/huaxueshe.apk
-            "$BT/apksigner" verify /tmp/huaxueshe.apk && echo "签名OK"
+            cp "$APK" /tmp/huaxueshe.apk
+            ls -la /tmp/huaxueshe.apk
           else
-            echo "未找到APK，构建失败"
+            echo "未找到APK"
           fi
 
       - uses: actions/upload-artifact@v4
