@@ -14,14 +14,11 @@ jobs:
     - uses: actions/setup-java@v4
   with: { distribution: temurin, java-version: 21 }
 
-      # 1. 准备网页文件 + 混淆 app.js
       - name: 准备网页+混淆
         run: |
           npm install -g javascript-obfuscator 2>/dev/null
           mkdir -p web
-          javascript-obfuscator app.js --output web/app.js \
-            --compact true --string-array true --string-array-encoding base64 \
-            --self-defending false --control-flow-flattening false 2>/dev/null || cp app.js web/app.js
+          javascript-obfuscator app.js --output web/app.js --compact true --string-array true --string-array-encoding base64 --self-defending false --control-flow-flattening false 2>/dev/null || cp app.js web/app.js
           cp index.html config.js manifest.json sw.js web/
           cat > .capacitorignore <<'EOF'
           android
@@ -29,9 +26,7 @@ jobs:
           .github
           node_modules
           EOF
-          echo "✅ 网页就绪（app.js已混淆）"
 
-      # 2. 初始化 Capacitor
       - name: 初始化
         run: |
           npm init -y
@@ -41,10 +36,8 @@ jobs:
           EOF
           npx cap add android
           npx cap sync android
-          echo "✅ 原生项目生成"
 
-      # 3. 注入 防root+防抓包
-      - name: 注入安全检测
+      - name: 注入防root/防代理
         run: |
           MAIN=$(find android/app/src/main/java -name "MainActivity.java" | head -1)
           cat > "$MAIN" <<'EOF'
@@ -68,18 +61,20 @@ jobs:
             }
           }
           EOF
-          echo "✅ 防root/防代理注入完成"
 
-      # 4. 生成签名密钥
-      - name: 生成签名密钥
+      - name: 准备签名密钥（解密/生成+加密）
         run: |
-          keytool -genkeypair -v -keystore /tmp/huaxueshe.keystore -alias huaxueshe \
-            -keyalg RSA -keysize 2048 -validity 10000 \
-            -storepass huaxueshe123 -keypass huaxueshe123 \
-            -dname "CN=huaxueshe, OU=dev, O=huaxueshe, L=Beijing, ST=Beijing, C=CN" 2>/dev/null
-          echo "✅ 密钥已生成（密码 huaxueshe123，请保留）"
+          PASS="${{ secrets.KEYSTORE_PASS }}"
+          if [ -z "$PASS" ]; then echo "⚠️ 请先在 Settings→Secrets 添加 KEYSTORE_PASS"; exit 1; fi
+          if [ -f "huaxueshe.keystore.enc" ]; then
+            openssl enc -d -aes-256-cbc -in huaxueshe.keystore.enc -out huaxueshe.keystore -k "$PASS" -md md5 2>/dev/null || { echo "❌ 解密失败"; exit 1; }
+            echo "✅ 已解密仓库中的密钥"
+          else
+            keytool -genkeypair -v -keystore huaxueshe.keystore -alias huaxueshe -keyalg RSA -keysize 2048 -validity 10000 -storepass "$PASS" -keypass "$PASS" -dname "CN=huaxueshe, OU=dev, O=huaxueshe, L=Beijing, ST=Beijing, C=CN" 2>/dev/null
+            openssl enc -aes-256-cbc -in huaxueshe.keystore -out huaxueshe.keystore.enc -k "$PASS" -md md5
+            echo "✅ 新密钥已生成并加密（请下载保存 .enc 文件！）"
+          fi
 
-      # 5. 构建（失败也保留日志）
       - name: 构建 APK
         run: |
           cd android
@@ -87,25 +82,24 @@ jobs:
           ./gradlew assembleRelease 2>&1 | tee /tmp/build.log
         continue-on-error: true
 
-      # 6. 签名 + 校验
       - name: 签名校验
         run: |
           BT=$(ls -d ${ANDROID_SDK_ROOT:-$ANDROID_HOME}/build-tools/* 2>/dev/null | tail -1)
+          PASS="${{ secrets.KEYSTORE_PASS }}"
           UNSIGNED=android/app/build/outputs/apk/release/app-release-unsigned.apk
           if [ -f "$UNSIGNED" ]; then
-            "$BT/apksigner" sign --ks /tmp/huaxueshe.keystore --ks-pass pass:huaxueshe123 --out /tmp/app-release.apk "$UNSIGNED" 2>/dev/null || cp "$UNSIGNED" /tmp/app-release.apk
+            "$BT/apksigner" sign --ks huaxueshe.keystore --ks-pass pass:"$PASS" --out /tmp/app-release.apk "$UNSIGNED" 2>/dev/null || cp "$UNSIGNED" /tmp/app-release.apk
             "$BT/apksigner" verify /tmp/app-release.apk && echo "✅ 签名校验通过"
           else
-            cp android/app/build/outputs/apk/debug/app-debug.apk /tmp/app-release.apk 2>/dev/null || echo "⚠️ 未找到APK，查看日志"
+            cp android/app/build/outputs/apk/debug/app-debug.apk /tmp/app-release.apk 2>/dev/null || echo "⚠️ 未找到APK"
           fi
 
-      # 7. 上传：APK + 签名 + 报错日志
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: 花学社-APK-签名-日志
           path: |
             /tmp/app-release.apk
-            /tmp/huaxueshe.keystore
+            huaxueshe.keystore.enc
             /tmp/build.log
             android/app/build/reports/**
